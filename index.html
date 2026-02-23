@@ -802,26 +802,33 @@
             to { transform: scale(1); opacity: 1; }
         }
         .popup-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+            width: 56px;
+            height: 56px;
+            background: var(--mint);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.2rem;
+            font-size: 1.6rem;
+            font-weight: 700;
         }
         .popup h3 {
             font-family: 'Fraunces', serif;
             font-size: 1.6rem;
-            margin-bottom: 1.2rem;
+            margin-bottom: 0.6rem;
             color: var(--text-primary);
         }
         .popup-position {
-            font-size: 2.6rem;
-            font-weight: 800;
+            font-size: 1.1rem;
+            font-weight: 600;
             color: var(--mint-dark);
-            margin-bottom: 0.1rem;
-            letter-spacing: -1px;
-        }
-        .popup-position-label {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
+            background: rgba(45,212,168,0.08);
+            display: inline-block;
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
         }
         .popup-badge {
             display: inline-block;
@@ -1093,12 +1100,11 @@
     <!-- Success Popup -->
     <div class="popup-overlay" id="popup">
         <div class="popup">
-            <div class="popup-icon">🎉</div>
-            <h3>Yerin Ayrıldı!</h3>
+            <div class="popup-icon">✓</div>
+            <h3 id="popup-title">Yerin Ayrıldı!</h3>
             <p class="popup-position" id="popup-count"></p>
-            <p class="popup-position-label">sıradasın</p>
             <div class="popup-badge" id="popup-badge">İlk 1.000 kişiye 3 ay premium hediye</div>
-            <p id="popup-text">İlk kullananlardan biri olacaksın! Lansman günü sana özel erişim linkini WhatsApp'tan göndereceğiz.</p>
+            <p id="popup-text">Lansman günü sana özel erişim linkini WhatsApp'tan göndereceğiz. İlk deneyimleyenlerden biri olacaksın!</p>
             <button class="popup-close" onclick="closePopup()">Harika!</button>
         </div>
     </div>
@@ -1166,15 +1172,19 @@
                 const position = BASE_COUNT + (count || 0);
 
                 // Popup içeriğini ayarla
-                document.getElementById('popup-count').textContent = '#' + position;
+                document.getElementById('popup-count').textContent = position + '. sıradasın';
                 
                 if (isDuplicate) {
-                    document.getElementById('popup-text').textContent = 'Zaten listemizdesin! Merak etme, lansman günü ilk senden haberdar olacağız.';
+                    document.getElementById('popup-title').textContent = 'Zaten Listemizdesin!';
+                    document.getElementById('popup-text').textContent = 'Merak etme, yayına çıktığımızda ilk seni haberdar edeceğiz.';
+                    document.getElementById('popup-badge').style.display = 'inline-block';
                 } else if (position <= 1000) {
-                    document.getElementById('popup-text').textContent = 'İlk kullananlardan biri olacaksın! Lansman günü sana özel erişim linkini WhatsApp\'tan göndereceğiz.';
+                    document.getElementById('popup-title').textContent = 'Yerin Ayrıldı!';
+                    document.getElementById('popup-text').textContent = 'Lansman günü sana özel erişim linkini WhatsApp\'tan göndereceğiz. İlk deneyimleyenlerden biri olacaksın!';
                     document.getElementById('popup-badge').style.display = 'inline-block';
                 } else {
-                    document.getElementById('popup-text').textContent = 'İlk deneyimleyenlerden biri olacaksın! Lansman günü sana özel erişim linkini WhatsApp\'tan göndereceğiz.';
+                    document.getElementById('popup-title').textContent = 'Yerin Ayrıldı!';
+                    document.getElementById('popup-text').textContent = 'Lansman günü sana özel erişim linkini WhatsApp\'tan göndereceğiz.';
                     document.getElementById('popup-badge').style.display = 'none';
                 }
 
