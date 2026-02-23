@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>harcamani — WhatsApp Harcama Takip Botu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Schibsted+Grotesk:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #FAFAF8;
+            --bg-warm: #F5F3EE;
+            --bg-card: #FFFFFF;
+            --text-primary: #1A1A1A;
+            --text-secondary: #6B7280;
+            --text-muted: #9CA3AF;
+            --mint: #2DD4A8;
+            --mint-dark: #0EA47A;
+            --mint-light: #E6FBF4;
+            --mint-bg: rgba(45, 212, 168, 0.08);
+            --orange: #F97316;
+            --orange-light: #FFF3E8;
+            --blue: #3B82F6;
+            --blue-light: #EEF4FF;
+            --rose: #F43F5E;
+            --rose-light: #FFF1F3;
+            --violet: #8B5CF6;
+            --violet-light: #F3EEFF;
+            --border: rgba(0,0,0,0.06);
+            --border-hover: rgba(0,0,0,0.12);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 20px rgba(0,0,0,0.06);
+            --shadow-lg: 0 20px 60px rgba(0,0,0,0.08);
+            --whatsapp: #25D366;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== NAV ===== */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 1rem 2rem;
+            background: rgba(250, 250, 248, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .nav-inner {
+            max-width: 1140px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            text-decoration: none;
+            display: flex;
+            align-items: baseline;
+            gap: 0;
+        }
+
+        .logo-text {
+            font-family: 'Schibsted Grotesk', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            letter-spacing: -0.5px;
+        }
+
+        .logo-dot {
+            color: var(--mint);
+            font-size: 2rem;
+            line-height: 0;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--text-primary); }
+
+        .nav-cta {
+            background: var(--text-primary) !important;
+            color: white !important;
+            padding: 0.55rem 1.3rem;
+            border-radius: 50px;
+            font-weight: 600 !important;
+            transition: all 0.3s !important;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 7rem 2rem 4rem;
+            position: relative;
+        }
+
+        .hero-inner {
+            max-width: 1140px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--mint-bg);
+            border: 1px solid rgba(45,212,168,0.15);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: var(--mint-dark);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.5s ease both;
+        }
+
+        .hero-tag .dot {
+            width: 7px; height: 7px;
+            background: var(--mint);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.5); }
+        }
+
+        .hero h1 {
+            font-family: 'Fraunces', serif;
+            font-size: clamp(2.8rem, 5vw, 4.2rem);
+            line-height: 1.1;
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.5s ease 0.1s both;
+        }
+
+        .hero h1 .accent {
+            color: var(--mint-dark);
+            font-style: italic;
+        }
+
+        .hero-desc {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            line-height: 1.75;
+            max-width: 480px;
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 0.5s ease 0.2s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 0.75rem;
+            animation: fadeInUp 0.5s ease 0.3s both;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--whatsapp);
+            color: white;
+            padding: 0.9rem 1.8rem;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(37,211,102,0.25);
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37,211,102,0.3);
+        }
+
+        .btn-ghost {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--text-secondary);
+            padding: 0.9rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .btn-ghost:hover {
+            color: var(--text-primary);
+            background: rgba(0,0,0,0.03);
+        }
+
+        /* ===== PHONE MOCKUP ===== */
+        .phone-mockup {
+            display: flex;
+            justify-content: center;
+            animation: fadeInUp 0.7s ease 0.3s both;
+        }
+
+        .phone {
+            width: 310px;
+            background: var(--bg-card);
+            border-radius: 36px;
+            padding: 10px;
+            box-shadow:
+                0 30px 80px rgba(0,0,0,0.1),
+                0 0 0 1px var(--border);
+            position: relative;
+        }
+
+        .phone-screen {
+            background: #0B141A;
+            border-radius: 28px;
+            overflow: hidden;
+            min-height: 500px;
+        }
+
+        .phone-notch {
+            width: 100px;
+            height: 5px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 10px;
+            margin: 10px auto 0;
+        }
+
+        .phone-header {
+            background: #1F2C34;
+            padding: 0.85rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+        }
+
+        .phone-avatar {
+            width: 38px; height: 38px;
+            background: linear-gradient(135deg, var(--mint), var(--mint-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: white;
+            font-family: 'Fraunces', serif;
+        }
+
+        .phone-contact-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #E9EDEF;
+        }
+
+        .phone-contact-status {
+            font-size: 0.72rem;
+            color: #8696A0;
+        }
+
+        .chat-messages {
+            padding: 0.85rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .msg {
+            max-width: 86%;
+            padding: 0.55rem 0.8rem;
+            border-radius: 10px;
+            font-size: 0.78rem;
+            line-height: 1.5;
+            opacity: 0;
+            animation: msgPop 0.35s ease forwards;
+        }
+
+        .msg-user {
+            align-self: flex-end;
+            background: #005C4B;
+            border-bottom-right-radius: 3px;
+            color: #E9EDEF;
+        }
+
+        .msg-bot {
+            align-self: flex-start;
+            background: #1F2C34;
+            border-bottom-left-radius: 3px;
+            color: #E9EDEF;
+        }
+
+        .msg:nth-child(1) { animation-delay: 0.6s; }
+        .msg:nth-child(2) { animation-delay: 1.1s; }
+        .msg:nth-child(3) { animation-delay: 1.6s; }
+        .msg:nth-child(4) { animation-delay: 2.1s; }
+        .msg:nth-child(5) { animation-delay: 2.6s; }
+        .msg:nth-child(6) { animation-delay: 3.1s; }
+
+        @keyframes msgPop {
+            from { opacity: 0; transform: translateY(8px) scale(0.97); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .msg-time {
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.35);
+            text-align: right;
+            margin-top: 0.15rem;
+        }
+
+        /* ===== STATS ===== */
+        .stats {
+            padding: 4rem 2rem;
+        }
+
+        .stats-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 1.75rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: var(--border-hover);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-num {
+            font-family: 'Fraunces', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-top: 0.25rem;
+        }
+
+        /* ===== FEATURES ===== */
+        .features {
+            padding: 5rem 2rem 6rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .section-tag {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--mint-dark);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 0.75rem;
+        }
+
+        .section-title {
+            font-family: 'Fraunces', serif;
+            font-size: clamp(2rem, 3.5vw, 2.8rem);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.75rem;
+        }
+
+        .section-desc {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .features-grid {
+            max-width: 1060px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 1.75rem;
+            transition: all 0.35s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--border-hover);
+        }
+
+        .feature-icon {
+            width: 48px; height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.1rem;
+        }
+
+        .feature-icon svg {
+            width: 22px; height: 22px;
+        }
+
+        .fi-mint { background: var(--mint-light); color: var(--mint-dark); }
+        .fi-orange { background: var(--orange-light); color: var(--orange); }
+        .fi-rose { background: var(--rose-light); color: var(--rose); }
+        .fi-blue { background: var(--blue-light); color: var(--blue); }
+        .fi-violet { background: var(--violet-light); color: var(--violet); }
+        .fi-warm { background: #FEF9EE; color: #D97706; }
+
+        .feature-card h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.65;
+        }
+
+        /* ===== HOW IT WORKS ===== */
+        .how {
+            padding: 5rem 2rem 6rem;
+            background: var(--bg-warm);
+        }
+
+        .steps {
+            max-width: 860px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            position: relative;
+        }
+
+        .steps::before {
+            content: '';
+            position: absolute;
+            top: 36px;
+            left: 18%;
+            right: 18%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--mint), var(--orange), var(--rose));
+            opacity: 0.2;
+            border-radius: 2px;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-num {
+            width: 72px; height: 72px;
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Fraunces', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0 auto 1.25rem;
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s;
+        }
+
+        .step:hover .step-num {
+            border-color: var(--mint);
+            box-shadow: 0 0 0 4px var(--mint-light);
+        }
+
+        .step h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+        }
+
+        .step p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ===== CTA ===== */
+        .cta {
+            padding: 6rem 2rem;
+        }
+
+        .cta-box {
+            max-width: 760px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            padding: 4rem 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--mint), var(--orange), var(--rose), var(--violet));
+        }
+
+        .cta-price {
+            font-family: 'Fraunces', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .cta-price-sub {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-box h2 {
+            font-family: 'Fraunces', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .cta-box > p {
+            color: var(--text-secondary);
+            max-width: 440px;
+            margin: 0 auto 2rem;
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 2.5rem 2rem;
+            background: var(--bg);
+        }
+
+        .footer-inner {
+            max-width: 1140px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-logo {
+            font-family: 'Schibsted Grotesk', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--text-muted);
+        }
+
+        .footer-text {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.82rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover { color: var(--text-primary); }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .anim {
+            opacity: 0;
+            transform: translateY(25px);
+            transition: all 0.55s ease;
+        }
+
+        .anim.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .hero-inner {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .hero-desc { margin: 0 auto 2.5rem; }
+            .hero-buttons { justify-content: center; flex-wrap: wrap; }
+            .phone-mockup { margin-top: 1.5rem; }
+            .phone { width: 270px; }
+            .stats-inner { grid-template-columns: 1fr; }
+            .features-grid { grid-template-columns: 1fr; }
+            .steps { grid-template-columns: 1fr; gap: 2.5rem; }
+            .steps::before { display: none; }
+            .cta-box { padding: 2.5rem 1.5rem; }
+            .nav-links { display: none; }
+            .footer-inner { flex-direction: column; gap: 1rem; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Nav -->
+    <nav>
+        <div class="nav-inner">
+            <a href="#" class="logo">
+                <span class="logo-text">harcamani</span><span class="logo-dot">.</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#features">Özellikler</a></li>
+                <li><a href="#how">Nasıl Çalışır</a></li>
+                <li><a href="#pricing">Fiyat</a></li>
+                <li><a href="https://wa.me/YOUR_NUMBER" class="nav-cta">Başla</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div>
+                <div class="hero-tag">
+                    <span class="dot"></span>
+                    Şu an aktif — 7/24
+                </div>
+                <h1>
+                    Harcamalarını<br>
+                    <span class="accent">WhatsApp'tan</span><br>
+                    takip et.
+                </h1>
+                <p class="hero-desc">
+                    Uygulama indirme yok, kayıt yok. Sadece WhatsApp'tan yaz — yapay zeka harcamalarını anlasın, kategorize etsin, bütçeni kontrol altında tutsun.
+                </p>
+                <div class="hero-buttons">
+                    <a href="https://wa.me/YOUR_NUMBER" class="btn-primary">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        WhatsApp'tan Başla
+                    </a>
+                    <a href="#how" class="btn-ghost">Nasıl çalışır? ↓</a>
+                </div>
+            </div>
+
+            <div class="phone-mockup">
+                <div class="phone">
+                    <div class="phone-screen">
+                        <div class="phone-notch"></div>
+                        <div class="phone-header">
+                            <div class="phone-avatar">h.</div>
+                            <div>
+                                <div class="phone-contact-name">harcamani</div>
+                                <div class="phone-contact-status">çevrimiçi</div>
+                            </div>
+                        </div>
+                        <div class="chat-messages">
+                            <div class="msg msg-user">
+                                bugün öğle yemeğine 150 lira verdim
+                                <div class="msg-time">14:32 ✓✓</div>
+                            </div>
+                            <div class="msg msg-bot">
+                                ✅ <strong>150 ₺</strong> — Yeme & İçme<br><br>
+                                📊 Bugün: <strong>380 ₺</strong><br>
+                                📅 Bu ay: <strong>4.250 ₺</strong>
+                                <div class="msg-time">14:32</div>
+                            </div>
+                            <div class="msg msg-user">
+                                50 dolar uber'e verdim
+                                <div class="msg-time">15:10 ✓✓</div>
+                            </div>
+                            <div class="msg msg-bot">
+                                ✅ <strong>$50</strong> (~1.800 ₺) — Ulaşım<br><br>
+                                💡 Ulaşım bütçenin %80'i doldu
+                                <div class="msg-time">15:10</div>
+                            </div>
+                            <div class="msg msg-user">
+                                aylık rapor
+                                <div class="msg-time">15:12 ✓✓</div>
+                            </div>
+                            <div class="msg msg-bot">
+                                📊 <strong>Şubat 2026</strong><br><br>
+                                🍔 Yeme & İçme: 2.800 ₺<br>
+                                🚗 Ulaşım: 3.200 ₺<br>
+                                🏠 Kira: 15.000 ₺<br>
+                                🛒 Market: 4.100 ₺<br><br>
+                                💰 Toplam: <strong>25.100 ₺</strong>
+                                <div class="msg-time">15:12</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="stats">
+        <div class="stats-inner">
+            <div class="stat-card anim">
+                <div class="stat-num">17</div>
+                <div class="stat-label">Harcama Kategorisi</div>
+            </div>
+            <div class="stat-card anim">
+                <div class="stat-num">4</div>
+                <div class="stat-label">Para Birimi Desteği</div>
+            </div>
+            <div class="stat-card anim">
+                <div class="stat-num">&lt; 3s</div>
+                <div class="stat-label">Yanıt Süresi</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features" id="features">
+        <div class="section-header anim">
+            <div class="section-tag">Özellikler</div>
+            <h2 class="section-title">Her şeyi WhatsApp'tan yönet</h2>
+            <p class="section-desc">Yapay zeka destekli harcama takibi, hiç bu kadar kolay olmamıştı.</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card anim">
+                <div class="feature-icon fi-mint">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" /></svg>
+                </div>
+                <h3>Doğal Dil Anlama</h3>
+                <p>Doğal dille yaz, yapay zeka otomatik anlasın. "200 lira markete verdim" yaz, gerisini biz halledelim.</p>
+            </div>
+            <div class="feature-card anim">
+                <div class="feature-icon fi-orange">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+                </div>
+                <h3>Çoklu Para Birimi</h3>
+                <p>USD, EUR, AED ve TRY arası otomatik çevrim. Yurt dışında da harcamalarını kolayca takip et.</p>
+            </div>
+            <div class="feature-card anim">
+                <div class="feature-icon fi-rose">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" /></svg>
+                </div>
+                <h3>Detaylı Raporlar</h3>
+                <p>Günlük, haftalık ve aylık raporlar. Nereye ne kadar harcadığını her an gör.</p>
+            </div>
+            <div class="feature-card anim">
+                <div class="feature-icon fi-blue">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" /></svg>
+                </div>
+                <h3>Bütçe Takibi</h3>
+                <p>Kategori bazlı bütçe belirle, limitine yaklaştığında otomatik uyarı al.</p>
+            </div>
+            <div class="feature-card anim">
+                <div class="feature-icon fi-violet">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" /></svg>
+                </div>
+                <h3>Eş Paylaşımı</h3>
+                <p>Eşin veya partnerin ile ortak harcamaları takip et, birlikte bütçe yönetin.</p>
+            </div>
+            <div class="feature-card anim">
+                <div class="feature-icon fi-warm">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6Z" /></svg>
+                </div>
+                <h3>17 Kategori</h3>
+                <p>Yeme-içme, ulaşım, market, kira ve daha fazlası. Harcamaların otomatik sınıflandırılsın.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how" id="how">
+        <div class="section-header anim">
+            <div class="section-tag">Nasıl Çalışır</div>
+            <h2 class="section-title">3 adımda başla</h2>
+            <p class="section-desc">Kayıt yok, indirme yok. Sadece WhatsApp.</p>
+        </div>
+
+        <div class="steps">
+            <div class="step anim">
+                <div class="step-num">1</div>
+                <h3>Mesaj At</h3>
+                <p>WhatsApp'tan harcamani'ya "Merhaba" yaz ve hemen başla.</p>
+            </div>
+            <div class="step anim">
+                <div class="step-num">2</div>
+                <h3>Harcamanı Yaz</h3>
+                <p>"Kahvaltıya 80 lira verdim" gibi doğal cümlelerle harcamanı bildir.</p>
+            </div>
+            <div class="step anim">
+                <div class="step-num">3</div>
+                <h3>Raporunu Al</h3>
+                <p>"Aylık rapor" yaz, detaylı harcama analizini anında gör.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta" id="pricing">
+        <div class="cta-box anim">
+            <div class="cta-price">Ücretsiz</div>
+            <div class="cta-price-sub">Şimdilik tamamen ücretsiz. Temel özellikler sonsuza kadar.</div>
+            <h2>Harcamalarını kontrol altına al</h2>
+            <p>WhatsApp üzerinden harcamalarını kolayca takip etmeye hemen başla.</p>
+            <a href="https://wa.me/YOUR_NUMBER" class="btn-primary">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Hemen WhatsApp'tan Başla
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-inner">
+            <div>
+                <div class="footer-logo">harcamani.</div>
+                <div class="footer-text">© 2026 harcamani. Tüm hakları saklıdır.</div>
+            </div>
+            <div class="footer-links">
+                <a href="#">Gizlilik</a>
+                <a href="#">Kullanım Şartları</a>
+                <a href="#">İletişim</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const obs = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.anim').forEach(el => obs.observe(el));
+
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            nav.style.background = window.scrollY > 50
+                ? 'rgba(250, 250, 248, 0.95)'
+                : 'rgba(250, 250, 248, 0.8)';
+        });
+    </script>
+
+</body>
+</html>
