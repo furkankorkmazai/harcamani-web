@@ -194,8 +194,25 @@
 
         .hero-buttons {
             display: flex;
+            flex-direction: column;
             gap: 0.75rem;
             animation: fadeInUp 0.5s ease 0.3s both;
+        }
+        .hero-sub-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .how-link {
+            color: var(--mint-dark);
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .how-link:hover {
+            text-decoration: underline;
         }
 
         .btn-primary {
@@ -670,7 +687,7 @@
                 text-align: center;
             }
             .hero-desc { margin: 0 auto 2.5rem; }
-            .hero-buttons { justify-content: center; flex-wrap: wrap; }
+            .hero-buttons { align-items: center; }
             .phone-mockup { margin-top: 1.5rem; }
             .phone { width: 270px; }
             .stats-inner { grid-template-columns: 1fr; }
@@ -686,22 +703,50 @@
         .waitlist-form {
             display: flex;
             gap: 0.5rem;
-            max-width: 480px;
+            max-width: 520px;
+        }
+        .phone-input-wrap {
+            flex: 1;
+            display: flex;
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            background: var(--bg-card);
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .phone-input-wrap:focus-within {
+            border-color: var(--mint);
+        }
+        .phone-input-wrap.error {
+            border-color: var(--rose);
+        }
+        .country-code {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.85rem 0.6rem 0.85rem 1rem;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            font-weight: 500;
+            background: var(--bg-warm);
+            border-right: 1px solid var(--border);
+            white-space: nowrap;
+            cursor: default;
+            user-select: none;
+        }
+        .country-flag {
+            font-size: 1.1rem;
         }
         .waitlist-input {
             flex: 1;
-            padding: 0.85rem 1.2rem;
-            border: 2px solid var(--border);
-            border-radius: 14px;
+            padding: 0.85rem 1rem;
+            border: none;
             font-size: 1rem;
             font-family: 'Outfit', sans-serif;
-            background: var(--bg-card);
+            background: transparent;
             color: var(--text-primary);
             outline: none;
-            transition: border-color 0.2s;
-        }
-        .waitlist-input:focus {
-            border-color: var(--mint);
+            min-width: 0;
         }
         .waitlist-input::placeholder {
             color: var(--text-muted);
@@ -710,24 +755,23 @@
             white-space: nowrap;
             border: none;
             cursor: pointer;
+            transition: transform 0.1s;
         }
-        .waitlist-success {
-            padding: 1rem 1.5rem;
-            background: var(--mint-light);
-            color: var(--mint-dark);
-            border-radius: 14px;
-            font-weight: 500;
-            font-size: 0.95rem;
-            max-width: 480px;
+        .waitlist-btn:active {
+            transform: scale(0.97);
         }
-        .waitlist-error {
-            color: var(--rose);
-            font-size: 0.85rem;
-            margin-top: 0.3rem;
+        .waitlist-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        .form-note {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.4rem;
         }
         .cta .waitlist-form {
             justify-content: center;
-            max-width: 500px;
+            max-width: 540px;
             margin: 0 auto;
         }
         /* Popup Overlay */
@@ -776,8 +820,29 @@
         .popup h3 {
             font-family: 'Fraunces', serif;
             font-size: 1.5rem;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.3rem;
             color: var(--text-primary);
+        }
+        .popup-position {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--mint-dark);
+            margin-bottom: 0.1rem;
+        }
+        .popup-position-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .popup-badge {
+            display: inline-block;
+            background: var(--orange-light);
+            color: var(--orange);
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.35rem 0.8rem;
+            border-radius: 20px;
+            margin-bottom: 1rem;
         }
         .popup p {
             color: var(--text-secondary);
@@ -803,6 +868,10 @@
         @media (max-width: 600px) {
             .waitlist-form {
                 flex-direction: column;
+            }
+            .waitlist-btn {
+                width: 100%;
+                justify-content: center;
             }
         }
     </style>
@@ -842,13 +911,18 @@
                 </p>
                 <div class="hero-buttons">
                     <div class="waitlist-form" id="hero-form">
-                        <input type="tel" id="hero-phone" placeholder="5XX XXX XX XX" class="waitlist-input" required>
-                        <button onclick="submitWaitlist('hero')" class="btn-primary waitlist-btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" /></svg>
+                        <div class="phone-input-wrap" id="hero-wrap">
+                            <div class="country-code"><span class="country-flag">🇹🇷</span> +90</div>
+                            <input type="tel" id="hero-phone" placeholder="5XX XXX XX XX" class="waitlist-input" maxlength="13" required>
+                        </div>
+                        <button onclick="submitWaitlist('hero')" class="btn-primary waitlist-btn" id="hero-btn">
                             Beni Haberdar Et
                         </button>
                     </div>
-                    <a href="#how" class="btn-ghost">Nasıl çalışır? ↓</a>
+                    <div class="hero-sub-row">
+                        <div style="display:inline-block;background:rgba(45,212,168,0.1);color:#0EA47A;font-size:0.85rem;font-weight:600;padding:0.4rem 1rem;border-radius:50px">İlk 1.000 kişiye 3 ay premium hediye</div>
+                        <a href="#how" class="how-link">Nasıl çalışır? ↓</a>
+                    </div>
                 </div>
             </div>
 
@@ -1006,13 +1080,16 @@
     <section class="cta" id="pricing">
         <div class="cta-box anim">
             <div class="cta-price">Ücretsiz</div>
-            <div class="cta-price-sub">Erken erişim listesine katıl, ilk deneyimleyenlerden ol!.</div>
+            <div class="cta-price-sub">Şimdilik tamamen ücretsiz. Temel özellikler sonsuza kadar.</div>
+            <div class="cta-early" style="display:inline-block;background:rgba(45,212,168,0.1);color:#0EA47A;font-size:0.9rem;font-weight:600;padding:0.5rem 1.2rem;border-radius:50px;margin-bottom:1.5rem">İlk 1.000 kişiye 3 ay premium hediye</div>
             <h2>Harcamalarını kontrol altına al</h2>
-            <p>WhatsApp üzerinden harcamalarını kolayca takip etmeye hazır ol.</p>
+            <p>WhatsApp üzerinden harcamalarını kolayca takip etmeye hemen başla.</p>
             <div class="waitlist-form" id="cta-form">
-                <input type="tel" id="cta-phone" placeholder="5XX XXX XX XX" class="waitlist-input" required>
-                <button onclick="submitWaitlist('cta')" class="btn-primary waitlist-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" /></svg>
+                <div class="phone-input-wrap" id="cta-wrap">
+                    <div class="country-code"><span class="country-flag">🇹🇷</span> +90</div>
+                    <input type="tel" id="cta-phone" placeholder="5XX XXX XX XX" class="waitlist-input" maxlength="13" required>
+                </div>
+                <button onclick="submitWaitlist('cta')" class="btn-primary waitlist-btn" id="cta-btn">
                     Listeye Katıl
                 </button>
             </div>
@@ -1024,9 +1101,10 @@
         <div class="popup">
             <div class="popup-icon">🚀</div>
             <h3>Yerin Ayrıldı!</h3>
-            <p id="popup-count" style="font-size:2rem;font-weight:700;color:var(--mint-dark);margin-bottom:0.3rem"></p>
-            <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem">sıradasın</p>
-            <p id="popup-text">Çok yakında WhatsApp'tan harcamalarını takip etmeye başlayacaksın. Lansman günü sana özel erişim linki göndereceğiz!</p>
+            <p class="popup-position" id="popup-count"></p>
+            <p class="popup-position-label">sıradasın</p>
+            <div class="popup-badge" id="popup-badge">🎁 İlk 1.000 kişiye 3 ay ücretsiz!</div>
+            <p id="popup-text">İlk kullananlardan biri olacaksın! Lansman günü sana özel erişim linkini WhatsApp'tan göndereceğiz.</p>
             <button class="popup-close" onclick="closePopup()">Tamam</button>
         </div>
     </div>
@@ -1063,46 +1141,75 @@
 
         async function submitWaitlist(source) {
             const input = document.getElementById(source + '-phone');
-            const form = document.getElementById(source + '-form');
-            let phone = input.value.trim().replace(/\s/g, '').replace(/[^0-9+]/g, '');
+            const wrap = document.getElementById(source + '-wrap');
+            const btn = document.getElementById(source + '-btn');
+            const originalBtn = btn.innerHTML;
+            let phone = input.value.trim().replace(/\s/g, '').replace(/[^0-9]/g, '');
 
-            if (phone.startsWith('5') && phone.length === 10) phone = '90' + phone;
-            if (phone.startsWith('05') && phone.length === 11) phone = '9' + phone;
-            if (phone.startsWith('+90')) phone = phone.slice(1);
+            // 0 ile başlıyorsa kaldır
+            if (phone.startsWith('0')) phone = phone.slice(1);
+            // +90 ekle
+            phone = '90' + phone;
 
-            if (!phone || phone.length < 10) {
-                input.style.borderColor = '#F43F5E';
+            if (phone.length !== 12 || !phone.startsWith('905')) {
+                wrap.classList.add('error');
+                setTimeout(() => wrap.classList.remove('error'), 2000);
                 return;
             }
 
-            const btn = form.querySelector('button');
             btn.disabled = true;
             btn.textContent = 'Ekleniyor...';
 
             try {
                 const { error } = await sb.from('waitlist').insert({ phone });
-                if (error && error.code === '23505') {
-                    document.getElementById('popup-text').textContent = 'Zaten listemizdesin! Merak etme, lansman günü ilk seni haberdar edeceğiz. 💚';
-                } else if (error) {
-                    throw error;
-                } else {
-                    document.getElementById('popup-text').textContent = 'Çok yakında WhatsApp\'tan harcamalarını takip etmeye başlayacaksın. Lansman günü sana özel erişim linki göndereceğiz! 🚀';
-                }
+                const isDuplicate = error && error.code === '23505';
+                
+                if (error && !isDuplicate) throw error;
+
+                // Sıra numarasını al
                 const BASE_COUNT = 462;
                 const { count } = await sb.from('waitlist').select('*', { count: 'exact', head: true });
                 const position = BASE_COUNT + (count || 0);
+
+                // Popup içeriğini ayarla
                 document.getElementById('popup-count').textContent = '#' + position;
+                
+                if (isDuplicate) {
+                    document.getElementById('popup-text').textContent = 'Zaten listemizdesin! Merak etme, lansman günü ilk senden haberdar olacağız.';
+                } else if (position <= 1000) {
+                    document.getElementById('popup-text').textContent = 'İlk kullananlardan biri olacaksın! Lansman günü sana özel erişim linkini WhatsApp\'tan göndereceğiz.';
+                    document.getElementById('popup-badge').style.display = 'inline-block';
+                } else {
+                    document.getElementById('popup-text').textContent = 'İlk deneyimleyenlerden biri olacaksın! Lansman günü sana özel erişim linkini WhatsApp\'tan göndereceğiz.';
+                    document.getElementById('popup-badge').style.display = 'none';
+                }
+
                 document.getElementById('popup').classList.add('active');
                 input.value = '';
                 btn.disabled = false;
-                btn.innerHTML = source === 'hero' ? '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" /></svg> Beni Haberdar Et' : '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" /></svg> Listeye Katıl';
+                btn.innerHTML = originalBtn;
             } catch (e) {
                 console.error(e);
                 btn.disabled = false;
                 btn.textContent = 'Tekrar Dene';
-                input.style.borderColor = '#F43F5E';
+                wrap.classList.add('error');
+                setTimeout(() => wrap.classList.remove('error'), 2000);
             }
         }
+
+        // Telefon input formatla
+        document.querySelectorAll('.waitlist-input[type="tel"]').forEach(input => {
+            input.addEventListener('input', function() {
+                this.value = this.value.replace(/[^0-9\s]/g, '');
+                this.closest('.phone-input-wrap').classList.remove('error');
+            });
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    this.closest('.waitlist-form').querySelector('button').click();
+                }
+            });
+        });
 
         const obs = new IntersectionObserver((entries) => {
             entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
