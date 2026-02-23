@@ -1022,9 +1022,11 @@
     <!-- Success Popup -->
     <div class="popup-overlay" id="popup">
         <div class="popup">
-            <div class="popup-icon">🎉</div>
-            <h3>Listeye Eklendi!</h3>
-            <p id="popup-text">Lansman olduğunda sana WhatsApp'tan haber vereceğiz. Hazır ol!</p>
+            <div class="popup-icon">🚀</div>
+            <h3>Yerine Ayrıldı!</h3>
+            <p id="popup-count" style="font-size:2rem;font-weight:700;color:var(--mint-dark);margin-bottom:0.3rem"></p>
+            <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem">sıradasın</p>
+            <p id="popup-text">Çok yakında WhatsApp'tan harcamalarını takip etmeye başlayacaksın. Lansman günü sana özel erişim linki göndereceğiz!</p>
             <button class="popup-close" onclick="closePopup()">Tamam</button>
         </div>
     </div>
@@ -1080,12 +1082,16 @@
             try {
                 const { error } = await sb.from('waitlist').insert({ phone });
                 if (error && error.code === '23505') {
-                    document.getElementById('popup-text').textContent = 'Bu numara zaten listede! Merak etme, seni haberdar edeceğiz. 📱';
+                    document.getElementById('popup-text').textContent = 'Zaten listemizdesin! Merak etme, lansman günü ilk senden haberdar olacağız. 💚';
                 } else if (error) {
                     throw error;
                 } else {
-                    document.getElementById('popup-text').textContent = 'Lansman olduğunda sana WhatsApp\'tan haber vereceğiz. Hazır ol! 🚀';
+                    document.getElementById('popup-text').textContent = 'Çok yakında WhatsApp\'tan harcamalarını takip etmeye başlayacaksın. Lansman günü sana özel erişim linki göndereceğiz! 🚀';
                 }
+                const BASE_COUNT = 462;
+                const { count } = await sb.from('waitlist').select('*', { count: 'exact', head: true });
+                const position = BASE_COUNT + (count || 0);
+                document.getElementById('popup-count').textContent = '#' + position;
                 document.getElementById('popup').classList.add('active');
                 input.value = '';
                 btn.disabled = false;
