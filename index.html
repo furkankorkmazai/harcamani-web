@@ -1006,7 +1006,7 @@
     <section class="cta" id="pricing">
         <div class="cta-box anim">
             <div class="cta-price">Ücretsiz</div>
-            <div class="cta-price-sub">Erken erişim listesine katıl, lansman olduğunda ilk senden haberdar olalım.</div>
+            <div class="cta-price-sub">Erken erişim listesine katıl, ilk deneyimleyenlerden ol!.</div>
             <h2>Harcamalarını kontrol altına al</h2>
             <p>WhatsApp üzerinden harcamalarını kolayca takip etmeye hazır ol.</p>
             <div class="waitlist-form" id="cta-form">
@@ -1082,7 +1082,7 @@
             try {
                 const { error } = await sb.from('waitlist').insert({ phone });
                 if (error && error.code === '23505') {
-                    document.getElementById('popup-text').textContent = 'Zaten listemizdesin! Merak etme, lansman günü ilk senden haberdar olacağız. 💚';
+                    document.getElementById('popup-text').textContent = 'Zaten listemizdesin! Merak etme, lansman günü ilk seni haberdar edeceğiz. 💚';
                 } else if (error) {
                     throw error;
                 } else {
