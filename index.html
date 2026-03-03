@@ -1044,9 +1044,9 @@
             <p class="section-desc">Eksik gördüğün, olsa güzel olur dediğin her şeyi bize ilet.</p>
         </div>
         <div class="request-form-wrap anim">
-            <textarea id="request-msg" class="request-textarea" placeholder="Mesela: Fotoğraftan fiş okusa harika olurdu..." rows="4" maxlength="1000"></textarea>
+            <textarea id="request-msg" class="request-textarea" placeholder="Mesela: Fotoğraftan fiş okusa harika olurdu..." rows="4" maxlength="500"></textarea>
             <div class="request-bottom">
-                <span class="request-charcount"><span id="request-chars">0</span>/1000</span>
+                <span class="request-charcount"><span id="request-chars">0</span>/500</span>
                 <button onclick="submitRequest()" class="request-btn" id="request-btn">Gönder</button>
             </div>
             <div id="request-success" class="request-success" style="display:none">
@@ -1083,14 +1083,25 @@
             document.getElementById('request-chars').textContent = this.value.length;
         });
 
+        let lastSubmitTime = 0;
+
         async function submitRequest() {
             const textarea = document.getElementById('request-msg');
             const btn = document.getElementById('request-btn');
             const msg = textarea.value.trim();
 
-            if (!msg) {
-                textarea.style.borderColor = 'var(--rose)';
-                setTimeout(() => textarea.style.borderColor = '', 2000);
+            // Min karakter kontrolü
+            if (msg.length < 10) {
+                textarea.placeholder = 'En az 10 karakter yazmalısın...';
+                textarea.focus();
+                return;
+            }
+
+            // 60 saniye cooldown
+            const now = Date.now();
+            const diff = Math.ceil((60000 - (now - lastSubmitTime)) / 1000);
+            if (now - lastSubmitTime < 60000) {
+                btn.textContent = diff + 's bekle';
                 return;
             }
 
@@ -1099,13 +1110,41 @@
 
             try {
                 const { error } = await sb.from('feature_requests').insert({ message: msg });
+                
+                if (error && error.code === '23505') {
+                    document.getElementById('request-success').textContent = 'Bu öneri zaten gönderilmiş!';
+                    document.getElementById('request-success').style.display = 'block';
+                    btn.textContent = 'Gönder';
+                    btn.disabled = false;
+                    setTimeout(() => {
+                        document.getElementById('request-success').style.display = 'none';
+                    }, 3000);
+                    return;
+                }
+                
                 if (error) throw error;
 
+                lastSubmitTime = Date.now();
                 textarea.value = '';
+                textarea.placeholder = 'Mesela: Fotoğraftan fiş okusa harika olurdu...';
                 document.getElementById('request-chars').textContent = '0';
+                document.getElementById('request-success').textContent = '✅ Önerini aldık, teşekkürler!';
                 document.getElementById('request-success').style.display = 'block';
                 btn.textContent = 'Gönder';
                 btn.disabled = false;
+
+                // 60sn cooldown göster
+                let sec = 60;
+                btn.disabled = true;
+                const timer = setInterval(() => {
+                    btn.textContent = sec + 's bekle';
+                    sec--;
+                    if (sec < 0) {
+                        clearInterval(timer);
+                        btn.textContent = 'Gönder';
+                        btn.disabled = false;
+                    }
+                }, 1000);
 
                 setTimeout(() => {
                     document.getElementById('request-success').style.display = 'none';
