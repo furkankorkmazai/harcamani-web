@@ -114,17 +114,20 @@
         .nav-links a:hover { color: var(--text-primary); }
 
         .nav-cta {
-            background: var(--text-primary) !important;
+            background: var(--whatsapp) !important;
             color: white !important;
             padding: 0.55rem 1.3rem;
             border-radius: 50px;
             font-weight: 600 !important;
             transition: all 0.3s !important;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
         }
 
         .nav-cta:hover {
             transform: translateY(-1px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 15px rgba(37,211,102,0.25);
         }
 
         /* ===== HERO ===== */
@@ -233,6 +236,8 @@
             transition: all 0.3s;
             box-shadow: 0 4px 15px rgba(37,211,102,0.25);
             font-family: 'Outfit', sans-serif;
+            border: none;
+            cursor: pointer;
         }
 
         .btn-primary:hover {
@@ -257,6 +262,13 @@
         .btn-ghost:hover {
             color: var(--text-primary);
             background: rgba(0,0,0,0.03);
+        }
+
+        /* WhatsApp icon for buttons */
+        .wa-icon {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
         }
 
         /* ===== PHONE MOCKUP ===== */
@@ -621,6 +633,27 @@
             font-size: 1rem;
         }
 
+        .cta-wa-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: var(--whatsapp);
+            color: white;
+            padding: 1rem 2.2rem;
+            border-radius: 50px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(37,211,102,0.25);
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .cta-wa-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37,211,102,0.3);
+        }
+
         /* ===== FOOTER ===== */
         footer {
             border-top: 1px solid var(--border);
@@ -699,187 +732,6 @@
             .nav-links { display: none; }
             .footer-inner { flex-direction: column; gap: 1rem; text-align: center; }
         }
-
-        /* Waitlist Form */
-        .waitlist-form {
-            display: flex;
-            gap: 0.5rem;
-            max-width: 520px;
-        }
-        .phone-input-wrap {
-            flex: 1;
-            display: flex;
-            border: 2px solid var(--border);
-            border-radius: 14px;
-            background: var(--bg-card);
-            overflow: hidden;
-            transition: border-color 0.2s;
-        }
-        .phone-input-wrap:focus-within {
-            border-color: var(--mint);
-        }
-        .phone-input-wrap.error {
-            border-color: var(--rose);
-        }
-        .country-code {
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-            padding: 0.85rem 0.6rem 0.85rem 1rem;
-            font-size: 0.95rem;
-            color: var(--text-primary);
-            font-weight: 500;
-            background: var(--bg-warm);
-            border-right: 1px solid var(--border);
-            white-space: nowrap;
-            cursor: default;
-            user-select: none;
-        }
-        .country-flag {
-            font-size: 1.1rem;
-        }
-        .waitlist-input {
-            flex: 1;
-            padding: 0.85rem 1rem;
-            border: none;
-            font-size: 1rem;
-            font-family: 'Outfit', sans-serif;
-            background: transparent;
-            color: var(--text-primary);
-            outline: none;
-            min-width: 0;
-        }
-        .waitlist-input::placeholder {
-            color: var(--text-muted);
-        }
-        .waitlist-btn {
-            white-space: nowrap;
-            border: none;
-            cursor: pointer;
-            transition: transform 0.1s;
-        }
-        .waitlist-btn:active {
-            transform: scale(0.97);
-        }
-        .waitlist-btn:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
-        .form-note {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-top: 0.4rem;
-        }
-        .cta .waitlist-form {
-            justify-content: center;
-            max-width: 540px;
-            margin: 0 auto;
-        }
-        /* Popup Overlay */
-        .popup-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(4px);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-        .popup-overlay.active {
-            display: flex;
-        }
-        .popup {
-            background: var(--bg-card);
-            border-radius: 28px;
-            padding: 3rem 2.5rem;
-            max-width: 440px;
-            width: 90%;
-            text-align: center;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.15);
-            animation: popIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        @keyframes popIn {
-            from { transform: scale(0.85); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-        .popup-icon {
-            width: 56px;
-            height: 56px;
-            background: var(--mint);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.2rem;
-            font-size: 1.6rem;
-            font-weight: 700;
-        }
-        .popup h3 {
-            font-family: 'Fraunces', serif;
-            font-size: 1.6rem;
-            margin-bottom: 0.6rem;
-            color: var(--text-primary);
-        }
-        .popup-position {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--mint-dark);
-            margin-bottom: 1.2rem;
-            background: rgba(45,212,168,0.08);
-            display: inline-block;
-            padding: 0.4rem 1.2rem;
-            border-radius: 50px;
-        }
-        .popup-badge {
-            display: inline-block;
-            background: rgba(45,212,168,0.1);
-            color: var(--mint-dark);
-            font-size: 0.85rem;
-            font-weight: 600;
-            padding: 0.5rem 1.2rem;
-            border-radius: 50px;
-            margin-bottom: 1.5rem;
-        }
-        .popup p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            margin-bottom: 2rem;
-            line-height: 1.7;
-            max-width: 320px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .popup-close {
-            background: var(--mint);
-            color: white;
-            border: none;
-            padding: 0.9rem 2.5rem;
-            border-radius: 50px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            font-family: 'Outfit', sans-serif;
-            transition: all 0.2s;
-        }
-        .popup-close:hover {
-            background: var(--mint-dark);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 15px rgba(45,212,168,0.3);
-        }
-        @media (max-width: 600px) {
-            .waitlist-form {
-                flex-direction: column;
-            }
-            .waitlist-btn {
-                width: 100%;
-                justify-content: center;
-            }
-        }
     </style>
 </head>
 <body>
@@ -894,7 +746,10 @@
                 <li><a href="#features">Özellikler</a></li>
                 <li><a href="#how">Nasıl Çalışır</a></li>
                 <li><a href="#pricing">Fiyat</a></li>
-                <li><a href="#pricing" class="nav-cta">Listeye Katıl</a></li>
+                <li><a href="https://wa.me/905382615378?text=Merhaba" target="_blank" class="nav-cta">
+                    <svg class="wa-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="currentColor"/></svg>
+                    Hemen Başla
+                </a></li>
             </ul>
         </div>
     </nav>
@@ -916,17 +771,12 @@
                     Uygulama indirme yok, kayıt yok. Sadece WhatsApp'tan yaz — yapay zeka harcamalarını anlasın, kategorize etsin, bütçeni kontrol altında tutsun.
                 </p>
                 <div class="hero-buttons">
-                    <div class="waitlist-form" id="hero-form">
-                        <div class="phone-input-wrap" id="hero-wrap">
-                            <div class="country-code"><span class="country-flag">🇹🇷</span> +90</div>
-                            <input type="tel" id="hero-phone" placeholder="5XX XXX XX XX" class="waitlist-input" maxlength="13" required>
-                        </div>
-                        <button onclick="submitWaitlist('hero')" class="btn-primary waitlist-btn" id="hero-btn">
-                            Beni Haberdar Et
-                        </button>
-                    </div>
+                    <a href="https://wa.me/905382615378?text=Merhaba" target="_blank" class="btn-primary">
+                        <svg class="wa-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="currentColor"/></svg>
+                        WhatsApp'tan Başla
+                    </a>
                     <div class="hero-sub-row">
-                        <div style="display:inline-block;background:rgba(45,212,168,0.1);color:#0EA47A;font-size:0.85rem;font-weight:600;padding:0.4rem 1rem;border-radius:50px">İlk 1.000 kişiye 3 ay premium hediye</div>
+                        <div style="display:inline-block;background:rgba(45,212,168,0.1);color:#0EA47A;font-size:0.85rem;font-weight:600;padding:0.4rem 1rem;border-radius:50px">Tamamen ücretsiz</div>
                         <a href="#how" class="how-link">Nasıl çalışır? ↓</a>
                     </div>
                 </div>
@@ -1087,32 +937,14 @@
         <div class="cta-box anim">
             <div class="cta-price">Ücretsiz</div>
             <div class="cta-price-sub">Şimdilik tamamen ücretsiz. Temel özellikler sonsuza kadar.</div>
-            <div class="cta-early" style="display:inline-block;background:rgba(45,212,168,0.1);color:#0EA47A;font-size:0.9rem;font-weight:600;padding:0.5rem 1.2rem;border-radius:50px;margin-bottom:1.5rem">İlk 1.000 kişiye 3 ay premium hediye</div>
             <h2>Harcamalarını kontrol altına al</h2>
-            <p>WhatsApp üzerinden harcamalarını kolayca takip etmeye hemen başla.</p>
-            <div class="waitlist-form" id="cta-form">
-                <div class="phone-input-wrap" id="cta-wrap">
-                    <div class="country-code"><span class="country-flag">🇹🇷</span> +90</div>
-                    <input type="tel" id="cta-phone" placeholder="5XX XXX XX XX" class="waitlist-input" maxlength="13" required>
-                </div>
-                <button onclick="submitWaitlist('cta')" class="btn-primary waitlist-btn" id="cta-btn">
-                    Listeye Katıl
-                </button>
-            </div>
+            <p>WhatsApp üzerinden harcamalarını kolayca takip etmeye hemen başla. Kayıt yok, indirme yok.</p>
+            <a href="https://wa.me/905382615378?text=Merhaba" target="_blank" class="cta-wa-btn">
+                <svg class="wa-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="currentColor"/></svg>
+                WhatsApp'tan Başla
+            </a>
         </div>
     </section>
-
-    <!-- Success Popup -->
-    <div class="popup-overlay" id="popup">
-        <div class="popup">
-            <div class="popup-icon">✓</div>
-            <h3 id="popup-title">Yerin Ayrıldı!</h3>
-            <p class="popup-position" id="popup-count"></p>
-            <div class="popup-badge" id="popup-badge">İlk 1.000 kişiye 3 ay premium hediye</div>
-            <p id="popup-text">Lansman günü sana özel erişim linkini WhatsApp'tan göndereceğiz. İlk deneyimleyenlerden biri olacaksın!</p>
-            <button class="popup-close" onclick="closePopup()">Harika!</button>
-        </div>
-    </div>
 
     <!-- Footer -->
     <footer>
@@ -1129,97 +961,7 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     <script>
-        const { createClient } = supabase;
-        const sb = createClient(
-            'https://bxmpbvtnynlwcfayxibh.supabase.co',
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ4bXBidnRueW5sd2NmYXl4aWJoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE4MzA2ODIsImV4cCI6MjA4NzQwNjY4Mn0.0dqXwm1go9YYNNVQ6bkvfpiDofW07Vxq_sOZOxoCkLU'
-        );
-
-        function closePopup() {
-            document.getElementById('popup').classList.remove('active');
-        }
-        document.getElementById('popup').addEventListener('click', function(e) {
-            if (e.target === this) closePopup();
-        });
-
-        async function submitWaitlist(source) {
-            const input = document.getElementById(source + '-phone');
-            const wrap = document.getElementById(source + '-wrap');
-            const btn = document.getElementById(source + '-btn');
-            const originalBtn = btn.innerHTML;
-            let phone = input.value.trim().replace(/\s/g, '').replace(/[^0-9]/g, '');
-
-            // 0 ile başlıyorsa kaldır
-            if (phone.startsWith('0')) phone = phone.slice(1);
-            // +90 ekle
-            phone = '90' + phone;
-
-            if (phone.length !== 12 || !phone.startsWith('905')) {
-                wrap.classList.add('error');
-                setTimeout(() => wrap.classList.remove('error'), 2000);
-                return;
-            }
-
-            btn.disabled = true;
-            btn.textContent = 'Ekleniyor...';
-
-            try {
-                const { error } = await sb.from('waitlist').insert({ phone });
-                const isDuplicate = error && error.code === '23505';
-                
-                if (error && !isDuplicate) throw error;
-
-                // Sıra numarasını al
-                const BASE_COUNT = 462;
-                const { count } = await sb.from('waitlist').select('*', { count: 'exact', head: true });
-                const position = BASE_COUNT + (count || 0);
-
-                // Popup içeriğini ayarla
-                document.getElementById('popup-count').textContent = position + '. sıradasın';
-                
-                if (isDuplicate) {
-                    document.getElementById('popup-title').textContent = 'Zaten Listemizdesin!';
-                    document.getElementById('popup-text').textContent = 'Merak etme, yayına çıktığımızda ilk seni haberdar edeceğiz.';
-                    document.getElementById('popup-badge').style.display = 'inline-block';
-                } else if (position <= 1000) {
-                    document.getElementById('popup-title').textContent = 'Yerin Ayrıldı!';
-                    document.getElementById('popup-text').textContent = 'Lansman günü sana özel erişim linkini WhatsApp\'tan göndereceğiz. İlk deneyimleyenlerden biri olacaksın!';
-                    document.getElementById('popup-badge').style.display = 'inline-block';
-                } else {
-                    document.getElementById('popup-title').textContent = 'Yerin Ayrıldı!';
-                    document.getElementById('popup-text').textContent = 'Lansman günü sana özel erişim linkini WhatsApp\'tan göndereceğiz.';
-                    document.getElementById('popup-badge').style.display = 'none';
-                }
-
-                document.getElementById('popup').classList.add('active');
-                input.value = '';
-                btn.disabled = false;
-                btn.innerHTML = originalBtn;
-            } catch (e) {
-                console.error(e);
-                btn.disabled = false;
-                btn.textContent = 'Tekrar Dene';
-                wrap.classList.add('error');
-                setTimeout(() => wrap.classList.remove('error'), 2000);
-            }
-        }
-
-        // Telefon input formatla
-        document.querySelectorAll('.waitlist-input[type="tel"]').forEach(input => {
-            input.addEventListener('input', function() {
-                this.value = this.value.replace(/[^0-9\s]/g, '');
-                this.closest('.phone-input-wrap').classList.remove('error');
-            });
-            input.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    this.closest('.waitlist-form').querySelector('button').click();
-                }
-            });
-        });
-
         const obs = new IntersectionObserver((entries) => {
             entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
         }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
