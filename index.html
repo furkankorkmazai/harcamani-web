@@ -713,6 +713,92 @@
             transform: translateY(0);
         }
 
+        /* ===== REQUEST FORM ===== */
+        .request-section {
+            padding: 5rem 2rem 6rem;
+            background: var(--bg-warm);
+        }
+
+        .request-form-wrap {
+            max-width: 560px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 1.5rem;
+            transition: border-color 0.2s;
+        }
+
+        .request-form-wrap:focus-within {
+            border-color: var(--mint);
+        }
+
+        .request-textarea {
+            width: 100%;
+            border: none;
+            outline: none;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            resize: vertical;
+            min-height: 100px;
+            background: transparent;
+            line-height: 1.6;
+        }
+
+        .request-textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        .request-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .request-charcount {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .request-btn {
+            background: var(--text-primary);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+            transition: all 0.2s;
+        }
+
+        .request-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .request-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .request-success {
+            text-align: center;
+            padding: 1rem;
+            margin-top: 0.75rem;
+            color: var(--mint-dark);
+            font-weight: 600;
+            font-size: 0.95rem;
+            background: var(--mint-light);
+            border-radius: 12px;
+        }
+
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
             .hero-inner {
@@ -746,6 +832,7 @@
                 <li><a href="#features">Özellikler</a></li>
                 <li><a href="#how">Nasıl Çalışır</a></li>
                 <li><a href="#pricing">Fiyat</a></li>
+                <li><a href="#istek">İstek / Öneri</a></li>
                 <li><a href="https://wa.me/905382615378?text=Merhaba" target="_blank" class="nav-cta">
                     <svg class="wa-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="currentColor"/></svg>
                     Hemen Başla
@@ -946,6 +1033,25 @@
         </div>
     </section>
 
+    <!-- İstek / Öneri -->
+    <section class="request-section" id="istek">
+        <div class="section-header anim">
+            <div class="section-tag">Geri Bildirim</div>
+            <h2 class="section-title">Bir fikrin mi var?</h2>
+            <p class="section-desc">Eksik gördüğün, olsa güzel olur dediğin her şeyi bize ilet.</p>
+        </div>
+        <div class="request-form-wrap anim">
+            <textarea id="request-msg" class="request-textarea" placeholder="Mesela: Fotoğraftan fiş okusa harika olurdu..." rows="4" maxlength="1000"></textarea>
+            <div class="request-bottom">
+                <span class="request-charcount"><span id="request-chars">0</span>/1000</span>
+                <button onclick="submitRequest()" class="request-btn" id="request-btn">Gönder</button>
+            </div>
+            <div id="request-success" class="request-success" style="display:none">
+                ✅ Önerini aldık, teşekkürler!
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer>
         <div class="footer-inner">
@@ -961,7 +1067,53 @@
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     <script>
+        const { createClient } = supabase;
+        const sb = createClient(
+            'https://bxmpbvtnynlwcfayxibh.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ4bXBidnRueW5sd2NmYXl4aWJoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE4MzA2ODIsImV4cCI6MjA4NzQwNjY4Mn0.0dqXwm1go9YYNNVQ6bkvfpiDofW07Vxq_sOZOxoCkLU'
+        );
+
+        // Karakter sayacı
+        document.getElementById('request-msg').addEventListener('input', function() {
+            document.getElementById('request-chars').textContent = this.value.length;
+        });
+
+        async function submitRequest() {
+            const textarea = document.getElementById('request-msg');
+            const btn = document.getElementById('request-btn');
+            const msg = textarea.value.trim();
+
+            if (!msg) {
+                textarea.style.borderColor = 'var(--rose)';
+                setTimeout(() => textarea.style.borderColor = '', 2000);
+                return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = 'Gönderiliyor...';
+
+            try {
+                const { error } = await sb.from('feature_requests').insert({ message: msg });
+                if (error) throw error;
+
+                textarea.value = '';
+                document.getElementById('request-chars').textContent = '0';
+                document.getElementById('request-success').style.display = 'block';
+                btn.textContent = 'Gönder';
+                btn.disabled = false;
+
+                setTimeout(() => {
+                    document.getElementById('request-success').style.display = 'none';
+                }, 4000);
+            } catch (e) {
+                console.error(e);
+                btn.textContent = 'Tekrar Dene';
+                btn.disabled = false;
+            }
+        }
+
         const obs = new IntersectionObserver((entries) => {
             entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
         }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
